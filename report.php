@@ -29,7 +29,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . '/mod/quiz/report/attemptsreport.php');
 require_once($CFG->dirroot . '/mod/quiz/report/downloadsubmissions/downloadsubmissions_form.php');
 
 /**
@@ -41,7 +40,7 @@ require_once($CFG->dirroot . '/mod/quiz/report/downloadsubmissions/downloadsubmi
  * @copyright 1999 onwards Martin Dougiamas and others {@link http://moodle.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class quiz_downloadsubmissions_report extends quiz_attempts_report {
+class quiz_downloadsubmissions_report extends mod_quiz\local\reports\attempts_report {
 
 	public function display($quiz, $cm, $course) {
         global $OUTPUT, $DB;
@@ -241,7 +240,7 @@ class quiz_downloadsubmissions_report extends quiz_attempts_report {
     	$context = context_course::instance($course->id);
 
     	// Construct the zip file name.
-    	$filename = clean_filename($course->fullname . ' - ' .
+    	$filename = clean_filename($course->shortname . ' - ' .
     			$quiz->name . ' - ' .
     			$cm->id . '.zip');
 
@@ -288,7 +287,7 @@ class quiz_downloadsubmissions_report extends quiz_attempts_report {
         		                'filearea'  => 'content',
         		                'itemid'    => 0,
         		                'filepath'  => '/',
-        		                'filename'  => $qttextfilename . '.text');
+        		                'filename'  => $qttextfilename . '.txt');
 
         		        if (!$fs->file_exists(
         		                $qttextfileinfo['contextid'],
@@ -324,7 +323,7 @@ class quiz_downloadsubmissions_report extends quiz_attempts_report {
         		                'filearea'  => 'content',
         		                'itemid'    => 0,
         		                'filepath'  => '/',
-        		                'filename'  => $textfilename . '.text');
+        		                'filename'  => $textfilename . '.txt');
 
         		        if (!$fs->file_exists(
         		                $textfileinfo['contextid'],
@@ -395,7 +394,7 @@ class quiz_downloadsubmissions_report extends quiz_attempts_report {
 	    		if ($textfile) {
 	    		    $zipfilename = $textfile->get_filename();
 // 	    		    $pathfilename = $pathprefix . $textfile->get_filepath() . $prefix3 . $zipfilename;
-	    		    $pathfilename = $pathprefix . $textfile->get_filepath() . $prefix3 . 'textresponse';
+	    		    $pathfilename = $pathprefix . $textfile->get_filepath() . $prefix3 . 'textresponse.txt';
 	    		    $pathfilename = clean_param($pathfilename, PARAM_PATH);
 	    		    $filesforzipping[$pathfilename] = $textfile;
 	    		}
@@ -407,9 +406,9 @@ class quiz_downloadsubmissions_report extends quiz_attempts_report {
     // 	    		    $pathfilename = $pathprefix . $textfile->get_filepath() . $prefix3 . $zipfilename;
 
     	    		    if ($data->folders == 'questionwise') {
-    	    		        $pathfilename = $prefix1 . $questiontextfile->get_filepath() . 'Question text';
+    	    		        $pathfilename = $prefix1 . $questiontextfile->get_filepath() . 'Question text.txt';
     	    		    } else if ($data->folders == 'attemptwise') {
-    	    		        $pathfilename = $pathprefix . $questiontextfile->get_filepath() . 'Question text';
+    	    		        $pathfilename = $pathprefix . $questiontextfile->get_filepath() . 'Question text.txt';
     	    		    }
     	    		    $pathfilename = clean_param($pathfilename, PARAM_PATH);
     	    		    $filesforzipping[$pathfilename] = $questiontextfile;
