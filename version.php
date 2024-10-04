@@ -29,6 +29,6 @@ $plugin->version   = 2020100700;
 $plugin->requires  = 2017051500;
 $plugin->cron      = 18000;
 $plugin->component = 'quiz_downloadsubmissions';
-$plugin->maturity  = MATURITY_BETA;
-$plugin->release   = '1.1-r2';
+$plugin->maturity  = MATURITY_STABLE;
+$plugin->release   = '1.2';
 
